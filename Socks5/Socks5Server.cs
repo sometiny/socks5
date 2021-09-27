@@ -12,17 +12,49 @@ namespace IocpSharp.Socks5
 {
     public class Socks5Server : TcpIocpServer
     {
+        private string _hostListFile = null;
+        private string _serveAt = null;
+
+        public string HostListFile => _hostListFile;
+        public string ServeAt => _serveAt;
+
+        public Socks5Server(string hostListFile, string serveAt = null) : base()
+        {
+            _hostListFile = hostListFile ?? throw new ArgumentNullException(hostListFile);
+            _serveAt = serveAt;
+        }
+
         /// <summary>
         /// 实现NewClient方法，处理Socks5请求
         /// </summary>
         /// <param name="client"></param>
         protected override void NewClient(Socket client)
         {
+            if (string.IsNullOrEmpty(_serveAt))
+            {
+                _serveAt = $"127.0.0.1:{LocalEndPoint.Port}";
+            }
+            BufferedNetworkStream stream = new BufferedNetworkStream(client, true);
+
+            //先设置基础流不消费读取到的缓冲区
+            stream.Consume = false;
+            int firstByte = stream.ReadByte();
+
+            //开始消费缓冲区
+            stream.Consume = true;
+
+            //第一个字节不为0x05，代表不是Socks5协议，我们全部作为PAC服务器处理
+            if (firstByte != 0x05)
+            {
+                Pac.Process(stream, _hostListFile, _serveAt);
+                return;
+            }
+
             ProtocolExchanger exchanger = new ProtocolExchanger();
             try
             {
                 //实例化NetWorkStream，让实例化NetWorkStream拥有基础Socket的处理权限
-                exchanger.Start(new NetworkStream(client, true));
+                exchanger.Start(stream);
             }
             catch
             {
