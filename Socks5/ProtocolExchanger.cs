@@ -32,6 +32,10 @@ namespace IocpSharp.Socks5
             //这里用异步方式处理
             _clientStream = stream;
             _remoteStream = remoteStream;
+
+            //开始对拷，不需要缓冲区了，多此一举
+            if (_clientStream is BufferedNetworkStream buffered) buffered.Buffered = false;
+
             stream.CopyToAsync(remoteStream).ContinueWith(clientCopyFinished);
             remoteStream.CopyToAsync(stream).ContinueWith(remoteCopyFinished);
 
