@@ -22,7 +22,7 @@ namespace IocpSharp.Socks5
             try
             {
                 //实例化NetWorkStream，让实例化NetWorkStream拥有基础Socket的处理权限
-                exchanger.Start(new NetworkStream(client, true));
+                exchanger.Start(new BufferedNetworkStream(client, true));
             }
             catch
             {
