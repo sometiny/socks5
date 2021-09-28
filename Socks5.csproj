@@ -50,9 +50,9 @@
     <Compile Include="Socks5\Socks5Server.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IocpSharp\IocpSharp.csproj">
-      <Project>{65ffb107-804c-4248-8164-b6154c6ae3a2}</Project>
-      <Name>IocpSharp</Name>
+    <ProjectReference Include="..\IocpSharpCore\IocpSharpCore.csproj">
+      <Project>{b6956836-f7d1-4a20-9206-ebaad4d97aa0}</Project>
+      <Name>IocpSharpCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
