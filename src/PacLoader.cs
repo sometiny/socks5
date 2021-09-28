@@ -48,6 +48,7 @@ function FindProxyForURL(url, host) {{
             var lines = File.ReadAllLines(file);
             lines = lines.Where(t => !string.IsNullOrEmpty(t)).Distinct().Select(t => "  \"" + t.ToLower() + "\" : 1").ToArray();
             StringBuilder sb = new StringBuilder();
+            sb.Append($"/*! PAC LAST MODIFIED AT: {File.GetLastWriteTimeUtc(file):r}*/\r\n");
             sb.Append("var domains = {\r\n");
             sb.Append(string.Join(", \r\n", lines));
             sb.Append("\r\n};\r\n");
