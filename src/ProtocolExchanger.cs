@@ -36,10 +36,12 @@ namespace IocpSharp.Socks5
             //开始对拷，不需要缓冲区了，多此一举
             if (_clientStream is BufferedNetworkStream buffered) buffered.Buffered = false;
 
-            stream.CopyToAsync(remoteStream).ContinueWith(clientCopyFinished);
-            remoteStream.CopyToAsync(stream).ContinueWith(remoteCopyFinished);
+            stream.CopyToAsync(remoteStream).ContinueWith(copyFinished);
+            remoteStream.CopyToAsync(stream).ContinueWith(copyFinished);
 
         }
+
+        private int _completed = 0;
 
         public void Dispose()
         {
@@ -47,15 +49,13 @@ namespace IocpSharp.Socks5
             _remoteStream?.Close();
         }
 
-        private void clientCopyFinished(Task task)
+        private void copyFinished(Task task)
         {
-            _clientStream.Close();
+            if(System.Threading.Interlocked.Increment(ref _completed) == 2)
+            {
+                Dispose();
+            }
         }
-        private void remoteCopyFinished(Task task)
-        {
-            _remoteStream.Close();
-        }
-
         /// <summary>
         /// 发送连接成功的响应到客户端
         /// </summary>

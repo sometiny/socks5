@@ -34,6 +34,8 @@ namespace IocpSharp.Socks5
             {
                 _serveAt = $"127.0.0.1:{LocalEndPoint.Port}";
             }
+
+            //实例化的是BufferedNetworkStream，可控制数据的消费和缓冲区
             BufferedNetworkStream stream = new BufferedNetworkStream(client, true);
             try
             {
@@ -61,7 +63,6 @@ namespace IocpSharp.Socks5
                 {
                     //异常，销毁
                     exchanger.Dispose();
-                    throw;
                 }
             }
             catch
