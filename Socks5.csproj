@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Socks5\PacLoader.cs" />
     <Compile Include="Socks5\Pac.cs" />
     <Compile Include="Socks5\ProtocolExchanger.cs" />
     <Compile Include="Socks5\Socks5Server.cs" />
