@@ -50,14 +50,14 @@
     <Compile Include="src\Commands\ICommand.cs" />
     <Compile Include="src\PacLoader.cs" />
     <Compile Include="src\Pac.cs" />
-    <Compile Include="src\ProtocolExchanger.cs" />
+    <Compile Include="src\Negotiator.cs" />
     <Compile Include="src\ProxyRequest.cs" />
     <Compile Include="src\Socks5Server.cs" />
     <Compile Include="src\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IocpSharpCore\IocpSharpCore.csproj">
-      <Project>{b6956836-f7d1-4a20-9206-ebaad4d97aa0}</Project>
+    <ProjectReference Include="..\iocp-sharp-core\IocpSharpCore.csproj">
+      <Project>{d2168bf6-1474-4d58-820d-140b71147887}</Project>
       <Name>IocpSharpCore</Name>
     </ProjectReference>
   </ItemGroup>
