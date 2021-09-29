@@ -53,6 +53,7 @@
     <Compile Include="src\ProtocolExchanger.cs" />
     <Compile Include="src\ProxyRequest.cs" />
     <Compile Include="src\Socks5Server.cs" />
+    <Compile Include="src\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IocpSharpCore\IocpSharpCore.csproj">
