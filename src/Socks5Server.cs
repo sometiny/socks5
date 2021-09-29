@@ -49,11 +49,11 @@ namespace IocpSharp.Socks5
                 //第一个字节不为0x05，代表不是Socks5协议，我们全部作为PAC服务器处理
                 if (firstByte != 0x05)
                 {
-                    Pac.Process(stream, _hostListFile, _serveAt);
+                    Pac.Handle(stream, _hostListFile, _serveAt);
                     return;
                 }
 
-                ProtocolNegotiator.Handle(stream);
+                Negotiator.Handle(stream);
             }
             catch
             {

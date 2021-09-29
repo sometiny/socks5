@@ -10,7 +10,7 @@ using IocpSharp.Socks5.Commands;
 
 namespace IocpSharp.Socks5
 {
-    class ProtocolNegotiator
+    class Negotiator
     {
         public static void Handle(Stream stream)
         {
@@ -20,7 +20,7 @@ namespace IocpSharp.Socks5
             //开始读取代理请求，返回一个需要代理的远程终结点
             ProxyRequest request = ReadRequest(stream);
 
-            ICommand command = (request.Command) switch
+            ICommand command = request.Command switch
             {
                 RequestCommand.CONNECT => new ConnectCommand(),
                 _ => null
@@ -68,7 +68,7 @@ namespace IocpSharp.Socks5
              */
             AddressType addressType = request.AddressType = (AddressType)buffer[3];
             int hostLength = 0;
-            if(addressType ==  AddressType.Host)
+            if (addressType == AddressType.Host)
             {
                 hostLength = buffer[4];
             }
@@ -79,7 +79,7 @@ namespace IocpSharp.Socks5
              * 地址类型为0x01 IPv4地址时，读取长度为3，其中第一个字节我们已经提前读取了，即buffer[4]。
              * 地址类型为0x04 IPv6地址时，读取长度为15，其中第一个字节我们已经提前读取了，即buffer[4]。
              */
-            int remainLength = addressType ==  AddressType.Host ? hostLength : (addressType ==  AddressType.IpV4 ? 3 : 15);
+            int remainLength = addressType == AddressType.Host ? hostLength : (addressType == AddressType.IpV4 ? 3 : 15);
 
             //同时，端口号为固定两位，可以直接读取
             remainLength += 2;
@@ -97,14 +97,14 @@ namespace IocpSharp.Socks5
             int destPort = (buffer[totalLength - 2] << 8) | buffer[totalLength - 1];
 
             //地址类型为主机，返回DnsHostEndPoint
-            if(addressType ==  AddressType.Host)
+            if (addressType == AddressType.Host)
             {
                 request.RemoteEndPoint = new DnsEndPoint(Encoding.ASCII.GetString(buffer, 5, hostLength), destPort);
                 return request;
             }
 
             /*确认IP地址长度，IPv4是4个字节，IPv6是16个字节*/
-            byte[] ipBuffer = new byte[addressType ==  AddressType.IpV4 ? 4 : 16];
+            byte[] ipBuffer = new byte[addressType == AddressType.IpV4 ? 4 : 16];
 
             /*
              * 从缓冲区中把IP数据读出来
@@ -112,7 +112,7 @@ namespace IocpSharp.Socks5
              */
             Array.Copy(buffer, 4, ipBuffer, 0, ipBuffer.Length);
 
-            request.RemoteEndPoint = new IPEndPoint( new IPAddress(ipBuffer), destPort);
+            request.RemoteEndPoint = new IPEndPoint(new IPAddress(ipBuffer), destPort);
             return request;
         }
 

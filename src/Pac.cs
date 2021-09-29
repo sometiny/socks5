@@ -29,7 +29,7 @@ namespace IocpSharp.Socks5
         /// <param name="stream"></param>
         /// <param name="hostListFile"></param>
         /// <param name="serveAt"></param>
-        public static void Process(Stream stream, string hostListFile, string serveAt)
+        public static void Handle(Stream stream, string hostListFile, string serveAt)
         {
             string firstLine = ReadHttpHeader(stream);
             if (!firstLine.StartsWith("GET /pac"))
