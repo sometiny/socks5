@@ -53,17 +53,7 @@ namespace IocpSharp.Socks5
                     return;
                 }
 
-                ProtocolExchanger exchanger = new ProtocolExchanger();
-                try
-                {
-                    //实例化NetWorkStream，让实例化NetWorkStream拥有基础Socket的处理权限
-                    exchanger.Start(stream);
-                }
-                catch
-                {
-                    //异常，销毁
-                    exchanger.Dispose();
-                }
+                ProtocolNegotiator.Handle(stream);
             }
             catch
             {
