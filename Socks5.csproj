@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iocp-sharp-core\IocpSharpCore.csproj">
-      <Project>{d2168bf6-1474-4d58-820d-140b71147887}</Project>
+      <Project>{4c19c105-0482-424c-ac7e-ddbe4d5e7655}</Project>
       <Name>IocpSharpCore</Name>
     </ProjectReference>
   </ItemGroup>
