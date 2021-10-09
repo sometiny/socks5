@@ -4,10 +4,11 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace IocpSharp.Socks5.Commands
 {
-    public sealed class PortBinder
+    public sealed class PortBinder : PortTransfer
     {
         private static int[] _allowedPorts = new int[0];
         private static ConcurrentStack<int> _portInStack = new ConcurrentStack<int>();
@@ -34,6 +35,16 @@ namespace IocpSharp.Socks5.Commands
         public static bool TryPop(out int port)
         {
             return _portInStack.TryPop(out port);
+        }
+        public PortBinder() : base() { }
+        public int Start(EndPoint remoteEndPoint)
+        {
+            if (!TryPop(out int port))
+            {
+                return 0;
+            }
+            Start(new IPEndPoint(IPAddress.Any, port), remoteEndPoint);
+            return port;
         }
     }
 }

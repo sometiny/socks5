@@ -23,6 +23,7 @@ namespace IocpSharp.Socks5
             ICommand command = request.Command switch
             {
                 RequestCommand.CONNECT => new ConnectCommand(),
+                RequestCommand.BIND => new BindCommand(),
                 _ => null
             };
 
