@@ -49,7 +49,6 @@
     <Compile Include="src\Commands\Command.cs" />
     <Compile Include="src\Commands\BindCommand.cs" />
     <Compile Include="src\Commands\ConnectCommand.cs" />
-    <Compile Include="src\Commands\ICommand.cs" />
     <Compile Include="src\Commands\PortBinder.cs" />
     <Compile Include="src\Commands\PortTransfer.cs" />
     <Compile Include="src\PacLoader.cs" />

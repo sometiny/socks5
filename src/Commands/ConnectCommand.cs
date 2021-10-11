@@ -8,11 +8,11 @@ using System.Net;
 
 namespace IocpSharp.Socks5.Commands
 {
-    public class ConnectCommand : Command, ICommand
+    public class ConnectCommand : Command
     {
         private Stream _clientStream = null;
         private Stream _remoteStream = null;
-        public void Handle(Stream requestStream, ProxyRequest request)
+        public override void Handle(Stream requestStream, ProxyRequest request)
         {
 
             _clientStream = requestStream;

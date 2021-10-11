@@ -37,14 +37,27 @@ namespace IocpSharp.Socks5.Commands
             return _portInStack.TryPop(out port);
         }
         public PortBinder() : base() { }
-        public int Start(EndPoint remoteEndPoint)
+        public int Start(ServerConnectedCallback afterServerConnected)
         {
             if (!TryPop(out int port))
             {
                 return 0;
             }
-            Start(new IPEndPoint(IPAddress.Any, port), remoteEndPoint);
-            return port;
+            try
+            {
+                Start(new IPEndPoint(IPAddress.Any, port), afterServerConnected);
+                return port;
+            }
+            catch
+            {
+                Release();
+                throw;
+            }
+        }
+
+        protected override void Release()
+        {
+            _portInStack.Push(LocalEndPoint.Port);
         }
     }
 }
