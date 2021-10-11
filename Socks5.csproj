@@ -47,9 +47,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Commands\Command.cs" />
-    <Compile Include="src\Commands\BindCommand.cs" />
     <Compile Include="src\Commands\ConnectCommand.cs" />
-    <Compile Include="src\Commands\PortManager.cs" />
     <Compile Include="src\PacLoader.cs" />
     <Compile Include="src\Pac.cs" />
     <Compile Include="src\Negotiator.cs" />

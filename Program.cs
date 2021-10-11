@@ -7,7 +7,6 @@ namespace IocpSharp.Socks5
         static void Main(string[] args)
         {
             Socks5Server server = new Socks5Server(AppDomain.CurrentDomain.BaseDirectory + "pac.lst");
-            Commands.PortManager.SetAllowedPorts(10001, 10010);
             try
             {
                 server.Start("0.0.0.0", 4088);

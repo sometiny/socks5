@@ -20,12 +20,9 @@ namespace IocpSharp.Socks5
             //开始读取代理请求，返回一个需要代理的远程终结点
             ProxyRequest request = ReadRequest(stream);
 
-            Console.WriteLine($"Request: {request.Command}, {request.RemoteEndPoint}");
-
             Command command = request.Command switch
             {
                 RequestCommand.CONNECT => new ConnectCommand(),
-                RequestCommand.BIND => new BindCommand(),
                 _ => null
             };
 
