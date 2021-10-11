@@ -8,11 +8,22 @@ using System.Net;
 
 namespace IocpSharp.Socks5.Commands
 {
-    public sealed class PortBinder : PortTransfer
+    public static class PortManager
     {
         private static int[] _allowedPorts = new int[0];
         private static ConcurrentStack<int> _portInStack = new ConcurrentStack<int>();
+        public static void SetAllowedPorts(int from, int to)
+        {
+            if (to < from) throw new ArgumentOutOfRangeException("to");
 
+            int[] ports = new int[to - from + 1];
+            for (int i = from; i <= to; i++)
+            {
+                ports[i - from] = i;
+            }
+
+            SetAllowedPorts(ports);
+        }
         public static void SetAllowedPorts(int[] ports)
         {
             ports = ports ?? throw new ArgumentNullException("ports");
@@ -35,29 +46,6 @@ namespace IocpSharp.Socks5.Commands
         public static bool TryPop(out int port)
         {
             return _portInStack.TryPop(out port);
-        }
-        public PortBinder() : base() { }
-        public int Start(ServerConnectedCallback afterServerConnected)
-        {
-            if (!TryPop(out int port))
-            {
-                return 0;
-            }
-            try
-            {
-                Start(new IPEndPoint(IPAddress.Any, port), afterServerConnected);
-                return port;
-            }
-            catch
-            {
-                Release();
-                throw;
-            }
-        }
-
-        protected override void Release()
-        {
-            _portInStack.Push(LocalEndPoint.Port);
         }
     }
 }
